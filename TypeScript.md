@@ -331,17 +331,29 @@ export type TFormFields = {
 
 ### Интерфейсы
 
-Интерфейс определяет свойства и методы, которые объект должен реализовать. Другими словами, интерфейс - это определение кастомного типа данных, но без реализации. Интерфейсы определяются с помощью ключевого слова `interface`:
+Аналог типов. Интерфейсы определяются с помощью ключевого слова `interface`:
+
+```
+interface IAwesomeString {
+  title: string;
+}
+
+const myAwesomeString: IAwesomeString = {
+  title: "Yay",
+};
+```
+
+Интерфейс определяет свойства и методы, которые объект должен реализовать. Другими словами, интерфейс - это определение кастомного типа данных, но без реализации:
 
 ```
 interface IUser {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 let employee: IUser = {
-    id: 42,
-    name: "Daria"
+  id: 42,
+  name: "Daria"
 }
 ```
 
@@ -392,7 +404,143 @@ class Tiger implements ICat {
 }
 ```
 
+#### Разница между типами и интерфейсами
+
+Разницы почти нет, всё что можно сделать с помощью типов можно сделать с помощью интерфейсов и наоборот. Но есть небольшие отличия.
+
+##### Расширение
+
+Интерфейсы и типы можно расширять. Расширение интерфейсов:
+
+```
+interface IAnimal {
+  name: string;
+}
+
+interface IBear extends IAnimal {
+  honey: boolean;
+}
+
+const bear = getBear();
+bear.name;
+bear.honey;
+```
+
+Расширение типов:
+
+```
+type TAnimal = {
+  name: string;
+}
+
+type TBear = TAnimal & {
+  honey: boolean;
+}
+
+const bear = getBear();
+bear.name;
+bear.honey;
+```
+
+##### Добавление новых полей
+
+Интерфейсам можно добавлять новые поля:
+
+```
+interface IWindow {
+  title: string;
+}
+
+interface IWindow {
+  ts: TypeScriptAPI;
+}
+
+const src = 'const a = "Hello World"';
+window.ts.transpileModule(src, {});
+```
+
+Типа нельзя добавлять новые поля и модицифировать их после создания:
+
+```
+type TWindow = {
+  title: string;
+}
+
+type TWindow = {
+  ts: TypeScriptAPI;
+}
+
+// Error: Duplicate identifier 'Window'.
+```
+
 ---
+
+### Объединения и пересечения типов (Union/Intersection)
+
+— способы замены наследования в TypeScript.
+
+#### Объединение
+
+Объединение позволяет создавать новые типы данных из существующих.
+Объединение указывается с помощью оператора прямой черты `|`, по обе стороны которой располагаются типы данных, которые будут объеденены:
+
+```
+let TNewType: TType1 | TType2 | TType3;
+```
+
+Объединение обозначает что значение, которому присваивается тип, созданный с помощью объединения типов может принадлежать только одному типу, например `number` или `string`:
+
+```
+function printId(id: number | string) {
+  console.log("Your ID is: " + id);
+}
+
+printId(42); // Ok
+printId("42"); // Ok
+printId({ myID: 22342 }); // Error: Argument of type '{ myID: number; }' is not assignable to parameter of type 'string | number'.
+```
+
+TypeScript разрещает только операции, которые будут валидны для каждого объединяемого типа:
+
+```
+function printId(id: number | string) {
+  console.log(id.toUpperCase()); // Error: Property 'toUpperCase' does not exist on type 'string | number'. Property 'toUpperCase' does not exist on type 'number'.
+}
+```
+
+#### Пересечение
+
+Пересечение указывается с помощью оператора амперсанда `&`, по обе стороны которого указываются типы данных.
+
+```
+let TNewType: TType1 & TType2 & TType3;
+```
+
+В этом случае значение должно обладать всеми обязательными признаками каждого типа, определяющего пересечение:
+
+```
+type TUser = {
+  username: string,
+};
+
+type TAdmin = {
+  isAdmin: boolean,
+};
+
+type TUserAdmin = TUser & TAdmin;
+```
+
+Пересечения удобно использовать для расширения каких-либо типов данных:
+
+```
+interface IResponseInit {
+  headers?: HeadersInit;
+  status?: number;
+  statusText?: string;
+}
+
+let repsonse: IResponseInit & { url: string };
+```
 
 ### Дженерики
 
