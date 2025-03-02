@@ -186,25 +186,15 @@ document.getElementById("myButton").addEventListener("click", function() {
 
 ### DOM API
 
-DOM предоставляет API для работы с элементами. Ниже представлен краткий список распространённых членов API, используемых в программировании веб- и XML-страниц с использованием DOM:
+DOM предоставляет API для работы с элементами. Ниже представлен краткий список распространённых методов API, используемых в для работы с DOM в JavaScript:
 
 - `getElementById`
 - `getElementsByTagName`
 - `getElementsByClassName`
 - `querySelector`
 - `querySelectorAll`
-
-- document.createElement(name)
-- parentNode.appendChild(node)
-- element.innerHTML
-- element.style.left
-- element.setAttribute
-- element.getAttribute
-- element.addEventListener
-- window.content
-- window.onload
-- window.dump
-- window.scrollTo
+- `createElement`
+- `appendChild`, `append`
 
 #### Поиск элемента по его идентификатору `getElementById`
 
@@ -523,6 +513,219 @@ const firstParagraph = document.querySelector("div > p");
 
 [🔎 Codepen](https://codepen.io/thevioletmaniac/pen/yyLgvqZ)
 
+#### Создание элементов `createElement` и добавление элементов `appendChild`/`append`
+
+Метод `createElement` создает динамически новые HTML-элементы. После этого можно устанавливать созданному элементу текст, атрибуты, стили:
+
+```
+createElement(localName, options);
+```
+
+Метод `createElement` создает элементы в памяти, но не добавляет их в DOM, для этого их нужно добавлять в DOM вручную через `appendChild` или `append`. Оба метода добавляют элемент внутрь родителя, но у них есть различия.
+
+Метод `appendChild` добавляет только один узел `Node`. При этом возвращает добавленный элемент и не позволяет добавлять текст напрямую:
+
+```
+parent.appendChild(child);
+```
+
+Метод `append` позволяет добавлять несколько элементов и строки в конец узла `Node`. При этом не возвращает добавленный элемент, но позволяет вставлять текст:
+
+```
+parent.append(child1, child2, ..., childN);
+```
+
+##### Примеры использования
+
+1. Добавление нового параграфа в `div`
+   При каждом нажатии в `div` добавляется новый параграф `<p>`:
+
+```
+<div id="container"></div>
+<button onclick="addParagraph()">Add</button>
+
+<script>
+    function addParagraph() {
+        let newParagraph = document.createElement("p");
+        newParagraph.innerText = "New parapgraph!";
+        document.getElementById("container").appendChild(newParagraph);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/emYgbor)
+
+2.  Создание кнопки и добавление обработчика события
+
+При нажатии создается новая кнопка, которая при клике вызывает `alert`:
+
+```
+<div id="container"></div>
+<button onclick="createButton()">Create a button</button>
+
+<script>
+    function createButton() {
+        let newButton = document.createElement("button");
+        newButton.innerText = "Click me!";
+
+        newButton.onclick = function() {
+            alert("Button clicked");
+        };
+
+        document.getElementById("container").appendChild(newButton);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/raNjogr)
+
+3. Создание списка `<ul>` с элементами `<li>`
+
+По нажатию на кнопку добавляется новый элемент в список:
+
+```
+<ul id="list">
+  <li>Default list item</li>
+</ul>
+<button onclick="addListItem()">Add a list item</button>
+
+
+<script>
+    function addListItem() {
+        let item = document.createElement("li");
+        item.innerText = "New list item";
+        document.getElementById("list").appendChild(item);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/WbNRLqO)
+
+4. Создание ссылки `<a>` с атрибутами
+
+```
+<div id="links"></div>
+<button onclick="addLink()">Add a link</button>
+
+<script>
+    function addLink() {
+        let link = document.createElement("a");
+        link.innerText = "Go to Google";
+        link.href = "https://google.com";
+        link.target = "_blank";
+        document.getElementById("links").appendChild(link);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/GgRrPVo)
+
+5. Создание нескольких элементов
+
+```
+<div id="container"></div>
+<button onclick="createCard()">Create a card</button>
+
+<style>
+    .card {
+        border: 1px solid violet;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+    function createCard() {
+        let card = document.createElement("div");
+        card.classList.add("card");
+
+        let title = document.createElement("h3");
+        title.innerText = "Title";
+
+        let text = document.createElement("p");
+        text.innerText = "Description";
+
+        card.appendChild(title);
+        card.appendChild(text);
+        document.getElementById("container").appendChild(card);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/MYWJZNV)
+
+6. Добавление текста и элемента сразу `append`
+
+```
+<div id="container"></div>
+<button onclick="appendText()">append()</button>
+<button onclick="appendChildText()">appendChild()</button>
+
+
+<script>
+    function appendText() {
+        let span = document.createElement("span");
+        span.innerText = " this is a span text ";
+
+        document.getElementById("container").append("Hello,", span, " How are you?");
+    }
+
+    /* Вернёт ошибку "TypeError: Node.appendChild: At least 1 argument required, but only 0 passed"
+    function appendChildText() {
+        let span = document.createElement("span");
+        span.innerText = " this is a span text ";
+
+        document.getElementById("container").appendChild("Hello,", span, " How are you?");
+    }
+    */
+
+    function appendChildText() {
+        let span = document.createElement("span");
+        span.innerText = " this is a span text ";
+
+        document.getElementById("container").appendChild(span);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/qEBRgWG)
+
+7. Добавление нескольких элементов с `append`
+
+```
+<ul id="list"></ul>
+<button onclick="addItems()">Add items</button>
+
+<script>
+    function addItems() {
+        let item1 = document.createElement("li");
+        item1.innerText = "Item 1";
+
+        let item2 = document.createElement("li");
+        item2.innerText = "Item 2";
+
+        document.getElementById("list").append(item1, item2);
+    }
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/vEYgbOO)
+
+8. Разница в возврате значений append appendChild
+
+```
+<script>
+    let div = document.createElement("div");
+    let span = document.createElement("span");
+
+    console.log(div.appendChild(span)); // Вернёт <span></span>
+    console.log(div.append(span)); // Вернёт undefined
+</script>
+```
+
+[🔎 Codepen](https://codepen.io/thevioletmaniac/pen/ZYELwGj)
+
 ### Недостатки DOM
 
 - Изменение элемента обновляет всю страницу (даже если поменялась только одна строка текста).
@@ -535,3 +738,12 @@ const firstParagraph = document.querySelector("div > p");
 
 1. [Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 2. [DOM](https://doka.guide/js/dom/)
+
+```
+
+<script>
+
+</script>
+```
+
+[🔎 Codepen]()
