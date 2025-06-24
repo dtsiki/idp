@@ -51,16 +51,14 @@ HTML-элементы содержат свойства, которые можн
 - `className` - список классов в HTML-атрибуте class
 - `style` - управление стилями (удаление, добавление). Стили добавляются так же с помощью свойств, сами свойства именуются по аналогии с CSS-свойствами
 
-```
-<div id="yay" class="text">
-  Yay!
-</div>
+```html
+<div id="yay" class="text">Yay!</div>
 
 <script>
-    const element = document.getElementsByTagName('div')[0];
-    console.log(element.className); // Выведет "text"
-    console.log(element.id); // Выведет "yay"
-    element.style.backgroundColor = 'violet'; // Изменит фон на фиолетовый цвет
+  const element = document.getElementsByTagName("div")[0];
+  console.log(element.className); // Выведет "text"
+  console.log(element.id); // Выведет "yay"
+  element.style.backgroundColor = "violet"; // Изменит фон на фиолетовый цвет
 </script>
 ```
 
@@ -74,7 +72,7 @@ HTML-элементы содержат свойства, которые можн
 - `parentElement` — получить родительский элемент
 - `nextElementSibling` и `previousElementSibling` — получить следующий или предыдущий узел-сосед
 
-```
+```html
 <div id="yay">
   <ul>
     <li>Element 1</li>
@@ -84,21 +82,20 @@ HTML-элементы содержат свойства, которые можн
 </div>
 
 <script>
-    const list = document.getElementsByTagName('ul')[0];
-    // children
-    console.log(list.children.length); // Выведет 3
-    console.log(list.children[0]); // Выведет Element 1
-    console.log(list.children[1]); // Выведет Element 2
-    console.log(list.children[2]); // Выведет Element 3
+  const list = document.getElementsByTagName("ul")[0];
+  // children
+  console.log(list.children.length); // Выведет 3
+  console.log(list.children[0]); // Выведет Element 1
+  console.log(list.children[1]); // Выведет Element 2
+  console.log(list.children[2]); // Выведет Element 3
 
-    // parentElement
-    console.log(list.parentElement.id); // Выведет "yay"
+  // parentElement
+  console.log(list.parentElement.id); // Выведет "yay"
 
-    // nextElementSibling и previousElementSibling
-    const second = list.children[1];
-    console.log(second.nextElementSibling); // Выведет Element 2
-    console.log(second.previousElementSibling); // Выведет Element 1
-
+  // nextElementSibling и previousElementSibling
+  const second = list.children[1];
+  console.log(second.nextElementSibling); // Выведет Element 2
+  console.log(second.previousElementSibling); // Выведет Element 1
 </script>
 ```
 
@@ -117,23 +114,22 @@ HTML-элементы содержат свойства, которые можн
 
 - `innerHTML` — это свойство возвращает HTML-код всего, что вложено в текущий элемент. При записи в это свойство, предыдущее содержимое будет затёрто. Страница отобразит новое содержимое:
 
-```
+```html
 <div>Hello, world!</div>
 <button onclick="yay()">Yay</button>
 <button onclick="qeq()">Qeq</button>
 
 <script>
-const div = document.getElementsByTagName('div')[0];
-console.log(div.innerHTML); // Выведет "Hello, world!"
+  const div = document.getElementsByTagName("div")[0];
+  console.log(div.innerHTML); // Выведет "Hello, world!"
 
-function yay() {
-    div.innerHTML = '<p>Yay</p>';
-}
+  function yay() {
+    div.innerHTML = "<p>Yay</p>";
+  }
 
-function qeq() {
-    div.innerHTML = '<p>Qeq</p>';
-}
-
+  function qeq() {
+    div.innerHTML = "<p>Qeq</p>";
+  }
 </script>
 ```
 
@@ -147,24 +143,24 @@ function qeq() {
 
 Свойство может изменить только текстовое содержимое элемента. Если присвоить строку, содержащую HTML, то она вставится как простой текст и не превратится в реальный DOM-элемент. Для того чтобы вставлять HTML c помощью строки, подойдёт свойство innerHTML.
 
-```
+```html
 <div>
   Qeq
   <div>Yay</div>
 </div>
 
-<input type="text" id="input" value="<h1>Hello, world!</h1>">
+<input type="text" id="input" value="<h1>Hello, world!</h1>" />
 <button onclick="change()">Change</button>
 
 <script>
-const div = document.getElementsByTagName('div')[0];
-console.log(div.outerHTML); // Выведет полностью изначальный div из HTML-разметки
-console.log(div.textContent); // Выведет две строки: 1) Qeq 2) Yay
+  const div = document.getElementsByTagName("div")[0];
+  console.log(div.outerHTML); // Выведет полностью изначальный div из HTML-разметки
+  console.log(div.textContent); // Выведет две строки: 1) Qeq 2) Yay
 
-function change() {
+  function change() {
     const input = document.getElementsByTagName("input")[0];
     div.outerHTML = input.value;
-}
+  }
 </script>
 ```
 
@@ -178,10 +174,9 @@ function change() {
 
 Пример работы с DOM в JavaScript - находим элемент с индетификатором id="myText" и изменяем его содержимое при нажатии кнопки:
 
-```
+```html
 document.getElementById("myButton").addEventListener("click", function() {
-  document.getElementById("myText").innerText = "Текст изменен!";
-});
+document.getElementById("myText").innerText = "Текст изменен!"; });
 ```
 
 ### DOM API
@@ -202,7 +197,7 @@ DOM предоставляет API для работы с элементами. 
 
 `getElementById` имеет следующий синтаксис, где `id` это строка, представляющая уникальный идентификатор элемента:
 
-```
+```js
 document.getElementById(id);
 ```
 
@@ -212,7 +207,7 @@ document.getElementById(id);
 
 1. Замена текста по нажатию на кнопку
 
-```
+```html
 <p id="text">Hello, world!</p>
 <button onclick="changeText()">Change</button>
 
@@ -227,19 +222,19 @@ document.getElementById(id);
 
 2. Скрытие элемента по нажатию на кнопку
 
-```
+```html
 <p id="text">Yay!</p>
 <button onclick="hideText()">Hide</button>
 <button onclick="showText()">Show</button>
 
 <script>
-    function hideText() {
-        document.getElementById("text").style.display = "none";
-    }
+  function hideText() {
+    document.getElementById("text").style.display = "none";
+  }
 
-    function showText() {
-        document.getElementById("text").style.display = "block";
-    }
+  function showText() {
+    document.getElementById("text").style.display = "block";
+  }
 </script>
 ```
 
@@ -247,14 +242,14 @@ document.getElementById(id);
 
 3. Управлением значением поля ввода
 
-```
-<input type="text" id="input" value="Hello, world!">
+```html
+<input type="text" id="input" value="Hello, world!" />
 <button onclick="changeInput()">Change</button>
 
 <script>
-    function changeInput() {
-        document.getElementById("input").value = "Yay!";
-    }
+  function changeInput() {
+    document.getElementById("input").value = "Yay!";
+  }
 </script>
 ```
 
@@ -263,7 +258,7 @@ document.getElementById(id);
 4. Добавление новых элементов
    Помимо модификации уже существующих элементов с помощью `getElementById` можно добавлять новые элементы. В примере ниже каждый клик добавляет новый элемент `<li>` в список:
 
-```
+```html
 <ul id="list">
   <li>Element 1</li>
   <li>Element 2</li>
@@ -271,13 +266,12 @@ document.getElementById(id);
 <button onclick="addItem()">Add</button>
 
 <script>
-    function addItem() {
-        let newItem = document.createElement("li");
-        newItem.innerText = "New element";
-        document.getElementById("list").appendChild(newItem);
-    }
+  function addItem() {
+    let newItem = document.createElement("li");
+    newItem.innerText = "New element";
+    document.getElementById("list").appendChild(newItem);
+  }
 </script>
-
 ```
 
 [🔎 Codepen](https://codepen.io/thevioletmaniac/pen/JojEOXE)
@@ -292,20 +286,20 @@ document.getElementById(id);
 
 1. Замена текста по всех выбранных тегах, например `<p>`:
 
-```
+```html
 <p>First</p>
 <p>Second</p>
 <p>Third</p>
 <button onclick="changeText()">Change</button>
 
 <script>
-    function changeText() {
-        let paragraphs = document.getElementsByTagName("p");
+  function changeText() {
+    let paragraphs = document.getElementsByTagName("p");
 
-        for (let i = 0; i < paragraphs.length; i++) {
-            paragraphs[i].innerText = "Yay " + (i + 1);
-        }
+    for (let i = 0; i < paragraphs.length; i++) {
+      paragraphs[i].innerText = "Yay " + (i + 1);
     }
+  }
 </script>
 ```
 
@@ -313,41 +307,35 @@ document.getElementById(id);
 
 Аналогично можно измененить цвета всех элементов `<p>`:
 
-```
-function changeColor() {
-    let items = document.getElementsByTagName("p");
-
-    for (let i = 0; i < items.length; i++) {
-        items[i].style.color = "purple";
-    }
-}
+```html
+function changeColor() { let items = document.getElementsByTagName("p"); for
+(let i = 0; i < items.length; i++) { items[i].style.color = "purple"; } }
 ```
 
 2. Изменение всех кнопок на странице:
 
-```
+```html
 <button>Button 1</button>
 <button>Button 2</button>
 <button>Button 3</button>
 <button onclick="disableButtons()">Disable them all</button>
 
 <script>
-    function disableButtons() {
-        let buttons = document.getElementsByTagName("button");
+  function disableButtons() {
+    let buttons = document.getElementsByTagName("button");
 
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].disabled = true;
-        }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].disabled = true;
     }
+  }
 </script>
-
 ```
 
 [🔎 Codepen](https://codepen.io/thevioletmaniac/pen/jEOyaLg)
 
 3. Подсчет количества элементов
 
-```
+```html
 <p>Text 1</p>
 <p>Text 2</p>
 <p>Text 3</p>
@@ -384,7 +372,7 @@ const multiplyClass = document.getElementsByClassName('first-class second-class 
 
 В примере ниже по нажатию на кнопку измениться текст только у первого и последнего параграфа с текстом:
 
-```
+```html
 <p class="text">Text 1</p>
 <p class="not-text">Text 2</p>
 <p class="text">Text 3</p>
@@ -392,42 +380,41 @@ const multiplyClass = document.getElementsByClassName('first-class second-class 
 <button onclick="changeText()">Change</button>
 
 <script>
-    function changeText() {
-        let items = document.getElementsByClassName("text");
+  function changeText() {
+    let items = document.getElementsByClassName("text");
 
-        for (let i = 0; i < items.length; i++) {
-            items[i].innerText = "Next text " + (i + 1);
-        }
+    for (let i = 0; i < items.length; i++) {
+      items[i].innerText = "Next text " + (i + 1);
     }
+  }
 </script>
-
 ```
 
 [🔎 Codepen](https://codepen.io/thevioletmaniac/pen/VYwPQrj)
 
 2. Добавление нового класса ко всем элементам
 
-```
+```html
 <p class="text">Text 1</p>
 <p class="text">Text 2</p>
 <p class="text">Text 3</p>
 <button onclick="addNewClass()">Add a new class</button>
 
 <style>
-    .awesome {
-        font-weight: bold;
-        color: violet;
-    }
+  .awesome {
+    font-weight: bold;
+    color: violet;
+  }
 </style>
 
 <script>
-    function addNewClass() {
-        let items = document.getElementsByClassName("text");
+  function addNewClass() {
+    let items = document.getElementsByClassName("text");
 
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.add("awesome");
-        }
+    for (let i = 0; i < items.length; i++) {
+      items[i].classList.add("awesome");
     }
+  }
 </script>
 ```
 
@@ -447,25 +434,25 @@ const firstParagraph = document.querySelector("div > p");
 
 Далее можно делать всё тоже самое, что делали в примерах выше.
 
-```
+```html
 <ul>
-    <li class="element">Element 1</li>
-    <li class="awesome-element">Element 2</li>
-    <li class="awesome-element">Element 3</li>
-    <li class="element">Element 4</li>
+  <li class="element">Element 1</li>
+  <li class="awesome-element">Element 2</li>
+  <li class="awesome-element">Element 3</li>
+  <li class="element">Element 4</li>
 </ul>
 
 <button onclick="changeText()">Change text</button>
 <button onclick="hideFirst()">Hide first</button>
 
 <script>
-    function changeText() {
-        document.querySelector(".element").innerText = "Updated element!";
-    }
+  function changeText() {
+    document.querySelector(".element").innerText = "Updated element!";
+  }
 
-    function hideFirst() {
-        document.querySelector("ul li").style.display = "none";
-    }
+  function hideFirst() {
+    document.querySelector("ul li").style.display = "none";
+  }
 </script>
 ```
 
@@ -479,35 +466,35 @@ const firstParagraph = document.querySelector("div > p");
 
 Далее можно делать всё тоже самое, что делали в примерах выше.
 
-```
+```html
 <ul>
-    <li class="element">Element 1</li>
-    <li class="awesome-element">Element 2</li>
-    <li class="awesome-element">Element 3</li>
-    <li class="element">Element 4</li>
+  <li class="element">Element 1</li>
+  <li class="awesome-element">Element 2</li>
+  <li class="awesome-element">Element 3</li>
+  <li class="element">Element 4</li>
 </ul>
 
 <button onclick="changeAll()">Change all</button>
 <button onclick="changeOnlyAwesome()">Change only awesome</button>
 
 <script>
-    function changeAll() {
-        let elements = document.querySelectorAll("ul li");
+  function changeAll() {
+    let elements = document.querySelectorAll("ul li");
 
-        elements.forEach((item, index) => {
-            item.innerText = "Awesome text " + (index + 1);
-            item.style.color = "violet";
-        });
-    }
+    elements.forEach((item, index) => {
+      item.innerText = "Awesome text " + (index + 1);
+      item.style.color = "violet";
+    });
+  }
 
-    function changeAwesome() {
-        let elements = document.querySelectorAll(".awesome-element");
+  function changeAwesome() {
+    let elements = document.querySelectorAll(".awesome-element");
 
-        elements.forEach((item, index) => {
-            item.innerText = "Awesome text " + (index + 1);
-            item.style.outline = "1px solid violet";
-        });
-    }
+    elements.forEach((item, index) => {
+      item.innerText = "Awesome text " + (index + 1);
+      item.style.outline = "1px solid violet";
+    });
+  }
 </script>
 ```
 
@@ -517,7 +504,7 @@ const firstParagraph = document.querySelector("div > p");
 
 Метод `createElement` создает динамически новые HTML-элементы. После этого можно устанавливать созданному элементу текст, атрибуты, стили:
 
-```
+```js
 createElement(localName, options);
 ```
 
@@ -525,13 +512,13 @@ createElement(localName, options);
 
 Метод `appendChild` добавляет только один узел `Node`. При этом возвращает добавленный элемент и не позволяет добавлять текст напрямую:
 
-```
+```js
 parent.appendChild(child);
 ```
 
 Метод `append` позволяет добавлять несколько элементов и строки в конец узла `Node`. При этом не возвращает добавленный элемент, но позволяет вставлять текст:
 
-```
+```js
 parent.append(child1, child2, ..., childN);
 ```
 
@@ -540,16 +527,16 @@ parent.append(child1, child2, ..., childN);
 1. Добавление нового параграфа в `div`
    При каждом нажатии в `div` добавляется новый параграф `<p>`:
 
-```
+```html
 <div id="container"></div>
 <button onclick="addParagraph()">Add</button>
 
 <script>
-    function addParagraph() {
-        let newParagraph = document.createElement("p");
-        newParagraph.innerText = "New parapgraph!";
-        document.getElementById("container").appendChild(newParagraph);
-    }
+  function addParagraph() {
+    let newParagraph = document.createElement("p");
+    newParagraph.innerText = "New parapgraph!";
+    document.getElementById("container").appendChild(newParagraph);
+  }
 </script>
 ```
 
@@ -559,21 +546,21 @@ parent.append(child1, child2, ..., childN);
 
 При нажатии создается новая кнопка, которая при клике вызывает `alert`:
 
-```
+```html
 <div id="container"></div>
 <button onclick="createButton()">Create a button</button>
 
 <script>
-    function createButton() {
-        let newButton = document.createElement("button");
-        newButton.innerText = "Click me!";
+  function createButton() {
+    let newButton = document.createElement("button");
+    newButton.innerText = "Click me!";
 
-        newButton.onclick = function() {
-            alert("Button clicked");
-        };
+    newButton.onclick = function () {
+      alert("Button clicked");
+    };
 
-        document.getElementById("container").appendChild(newButton);
-    }
+    document.getElementById("container").appendChild(newButton);
+  }
 </script>
 ```
 
@@ -583,19 +570,18 @@ parent.append(child1, child2, ..., childN);
 
 По нажатию на кнопку добавляется новый элемент в список:
 
-```
+```html
 <ul id="list">
   <li>Default list item</li>
 </ul>
 <button onclick="addListItem()">Add a list item</button>
 
-
 <script>
-    function addListItem() {
-        let item = document.createElement("li");
-        item.innerText = "New list item";
-        document.getElementById("list").appendChild(item);
-    }
+  function addListItem() {
+    let item = document.createElement("li");
+    item.innerText = "New list item";
+    document.getElementById("list").appendChild(item);
+  }
 </script>
 ```
 
@@ -603,18 +589,18 @@ parent.append(child1, child2, ..., childN);
 
 4. Создание ссылки `<a>` с атрибутами
 
-```
+```html
 <div id="links"></div>
 <button onclick="addLink()">Add a link</button>
 
 <script>
-    function addLink() {
-        let link = document.createElement("a");
-        link.innerText = "Go to Google";
-        link.href = "https://google.com";
-        link.target = "_blank";
-        document.getElementById("links").appendChild(link);
-    }
+  function addLink() {
+    let link = document.createElement("a");
+    link.innerText = "Go to Google";
+    link.href = "https://google.com";
+    link.target = "_blank";
+    document.getElementById("links").appendChild(link);
+  }
 </script>
 ```
 
@@ -622,34 +608,34 @@ parent.append(child1, child2, ..., childN);
 
 5. Создание нескольких элементов
 
-```
+```html
 <div id="container"></div>
 <button onclick="createCard()">Create a card</button>
 
 <style>
-    .card {
-        border: 1px solid violet;
-        padding: 10px;
-        margin: 5px;
-        border-radius: 5px;
-    }
+  .card {
+    border: 1px solid violet;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
 </style>
 
 <script>
-    function createCard() {
-        let card = document.createElement("div");
-        card.classList.add("card");
+  function createCard() {
+    let card = document.createElement("div");
+    card.classList.add("card");
 
-        let title = document.createElement("h3");
-        title.innerText = "Title";
+    let title = document.createElement("h3");
+    title.innerText = "Title";
 
-        let text = document.createElement("p");
-        text.innerText = "Description";
+    let text = document.createElement("p");
+    text.innerText = "Description";
 
-        card.appendChild(title);
-        card.appendChild(text);
-        document.getElementById("container").appendChild(card);
-    }
+    card.appendChild(title);
+    card.appendChild(text);
+    document.getElementById("container").appendChild(card);
+  }
 </script>
 ```
 
@@ -657,21 +643,22 @@ parent.append(child1, child2, ..., childN);
 
 6. Добавление текста и элемента сразу `append`
 
-```
+```html
 <div id="container"></div>
 <button onclick="appendText()">append()</button>
 <button onclick="appendChildText()">appendChild()</button>
 
-
 <script>
-    function appendText() {
-        let span = document.createElement("span");
-        span.innerText = " this is a span text ";
+  function appendText() {
+    let span = document.createElement("span");
+    span.innerText = " this is a span text ";
 
-        document.getElementById("container").append("Hello,", span, " How are you?");
-    }
+    document
+      .getElementById("container")
+      .append("Hello,", span, " How are you?");
+  }
 
-    /* Вернёт ошибку "TypeError: Node.appendChild: At least 1 argument required, but only 0 passed"
+  /* Вернёт ошибку "TypeError: Node.appendChild: At least 1 argument required, but only 0 passed"
     function appendChildText() {
         let span = document.createElement("span");
         span.innerText = " this is a span text ";
@@ -680,12 +667,12 @@ parent.append(child1, child2, ..., childN);
     }
     */
 
-    function appendChildText() {
-        let span = document.createElement("span");
-        span.innerText = " this is a span text ";
+  function appendChildText() {
+    let span = document.createElement("span");
+    span.innerText = " this is a span text ";
 
-        document.getElementById("container").appendChild(span);
-    }
+    document.getElementById("container").appendChild(span);
+  }
 </script>
 ```
 
@@ -693,20 +680,20 @@ parent.append(child1, child2, ..., childN);
 
 7. Добавление нескольких элементов с `append`
 
-```
+```html
 <ul id="list"></ul>
 <button onclick="addItems()">Add items</button>
 
 <script>
-    function addItems() {
-        let item1 = document.createElement("li");
-        item1.innerText = "Item 1";
+  function addItems() {
+    let item1 = document.createElement("li");
+    item1.innerText = "Item 1";
 
-        let item2 = document.createElement("li");
-        item2.innerText = "Item 2";
+    let item2 = document.createElement("li");
+    item2.innerText = "Item 2";
 
-        document.getElementById("list").append(item1, item2);
-    }
+    document.getElementById("list").append(item1, item2);
+  }
 </script>
 ```
 
@@ -714,13 +701,13 @@ parent.append(child1, child2, ..., childN);
 
 8. Разница в возврате значений append appendChild
 
-```
+```html
 <script>
-    let div = document.createElement("div");
-    let span = document.createElement("span");
+  let div = document.createElement("div");
+  let span = document.createElement("span");
 
-    console.log(div.appendChild(span)); // Вернёт <span></span>
-    console.log(div.append(span)); // Вернёт undefined
+  console.log(div.appendChild(span)); // Вернёт <span></span>
+  console.log(div.append(span)); // Вернёт undefined
 </script>
 ```
 
