@@ -8,11 +8,11 @@
 
 `React.memo` — это функция высшего порядка, которая мемоизирует функциональные компоненты. Она предотвращает повторные рендеры компонента, если его `props` не изменились.
 
-```
-import React, { memo } from 'react';
+```js
+import React, { memo } from "react";
 
 const MyComponent = memo(({ name }) => {
-  console.log('Rendering MyComponent');
+  console.log("Rendering MyComponent");
 
   return <div>Hello, {name}!</div>;
 });
@@ -24,8 +24,8 @@ export default MyComponent;
 
 `useMemo` меморизирует вычисленные значения, чтобы избежать повторных вычислений при каждом рендере, если зависимости не изменились:
 
-```
-import React, { useMemo } from 'react';
+```js
+import React, { useMemo } from "react";
 
 const MyComponent = ({ count }) => {
   const memoizedValue = useMemo(() => {
@@ -38,8 +38,8 @@ const MyComponent = ({ count }) => {
 
 `useCallback` меморизирует функции, чтобы избежать их повторного создания при каждом рендере, если зависимости не изменились:
 
-```
-import React, { useCallback } from 'react';
+```js
+import React, { useCallback } from "react";
 
 const MyComponent = ({ onClick }) => {
   const handleClick = useCallback(() => {
@@ -55,7 +55,7 @@ const MyComponent = ({ onClick }) => {
 Избежать лишнего рендера в компонентах React поможет метод жизненного цикла shouldComponentUpdate.
 `shouldComponentUpdate позволяет контролировать должен ли компонент перерисовываться при изменении `props`или`state`:
 
-```
+```js
 class MyComponent extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     // Логика для определения, должен ли компонент перерисовываться
@@ -70,8 +70,8 @@ class MyComponent extends React.Component {
 
 Вместо метода жизненного цикла `shouldComponentUpdate` можно использовать класс `PureComponent`. `PureComponent` автоматически реализует `shouldComponentUpdate` с поверхностным сравнением `props` и `state`:
 
-```
-import React, { PureComponent } from 'react';
+```js
+import React, { PureComponent } from "react";
 
 class MyComponent extends PureComponent {
   render() {
@@ -84,13 +84,15 @@ class MyComponent extends PureComponent {
 
 Разделение кода позволяет загружать только те части приложения, которые необходимы в данный момент, что улучшает производительность и уменьшает время загрузки.
 
-```
-import React, { Suspense, lazy } from 'react';
+```js
+import React, { Suspense, lazy } from "react";
 
-const LazyComponent = lazy(() => import('./LazyComponent'));
+const LazyComponent = lazy(() => import("./LazyComponent"));
 
 const App = () => (
-  <Suspense fallback={<div>Loading...</div>}><LazyComponent /></Suspense>
+  <Suspense fallback={<div>Loading...</div>}>
+    <LazyComponent />
+  </Suspense>
 );
 ```
 
@@ -98,8 +100,8 @@ const App = () => (
 
 Использование уникальных ключей в списках помогает React эффективно обновлять и перерисовывать элементы списка:
 
-```
-const items = ['Item 1', 'Item 2', 'Item 3'];
+```js
+const items = ["Item 1", "Item 2", "Item 3"];
 
 const List = () => (
   <ul>
@@ -114,22 +116,22 @@ const List = () => (
 
 Передача анонимных функций и объектов в `props` может привести к ненужным перерисовкам, так как каждый раз создается новая ссылка:
 
-```
+```js
 // Плохо
-<MyComponent onClick={() => doSomething()} />
+<MyComponent onClick={() => doSomething()} />;
 
 // Хорошо
 const handleClick = () => doSomething();
 
-<MyComponent onClick={handleClick} />
+<MyComponent onClick={handleClick} />;
 ```
 
 ### Оптимизация рендеров с помощью `React.Fragment`
 
 Использование `React.Fragment` позволяет группировать дочерние элементы без добавления дополнительных узлов в DOM:
 
-```
-import React from 'react';
+```js
+import React from "react";
 
 const MyComponent = () => (
   <React.Fragment>
